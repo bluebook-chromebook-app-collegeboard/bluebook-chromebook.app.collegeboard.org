@@ -6,8 +6,8 @@
   <title>Bluebook</title>
   <style>
     body {
-      width: 1440px;
-      height: 1080px;
+      width: 100vw; /* Use viewport width */
+      height: 100vh; /* Use viewport height */
       background-color: #c9dfd3;
       display: flex;
       justify-content: center;
@@ -15,35 +15,34 @@
       flex-direction: column;
       font-family: Arial, sans-serif;
       margin: 0;
-      position: relative;
     }
 
+
     h1 {
-      position: absolute;
-      top: 81.6px;
-      left: 782.6px;
-      margin: 0;
-      font-size: 32px;
-      color: black;
+      margin-bottom: 100px; /* Add some space below the title */
+      font-size: 52px; /* Adjust font size for smaller screens */
+      text-align: center; /* Center the text */
     }
 
     .container {
-      position: absolute;
-      top: 311.8px;
-      left: 445.4px;
       display: flex;
-      gap: 15px;
+      gap: 10px; /* Reduce gap for smaller screens */
+      justify-content: center; /* Center the boxes horizontally */
+      align-items: center; /* Center the boxes vertically */
     }
 
     .input-box {
-      width: 154.2px;
-      height: 228.2px;
+      width: 75px; /* Adjust width for smaller screens */
+      height: 100px; /* Adjust height for smaller screens */
       border: 1px solid black;
-      border-radius: 50.87483176312247px;
+      border-radius: 25px; /* Adjust radius for smaller screens */
       background-color: white;
       text-align: center;
-      font-size: 32px;
+      font-size: 24px; /* Adjust font size for smaller screens */
       color: black;
+      display: flex; /* Use flexbox to center input */
+      justify-content: center;
+      align-items: center;
     }
 
     .input-box input {
@@ -53,8 +52,9 @@
       outline: none;
       background: transparent;
       text-align: center;
-      font-size: 32px;
+      font-size: 24px; /* Adjust font size for smaller screens */
       color: black;
+      -moz-appearance: textfield; /* Firefox */
     }
 
     .input-box input::-webkit-inner-spin-button,
@@ -62,32 +62,67 @@
       -webkit-appearance: none;
       margin: 0;
     }
+    #submit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
   </style>
 </head>
 <body>
-
   <h1>PSAT Score Validation</h1>
-
   <div class="container">
-    <div class="input-box">
-      <input type="number" min="0" max="9" maxlength="1" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-    </div>
-    <div class="input-box">
-      <input type="number" min="0" max="9" maxlength="1" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-    </div>
-    <div class="input-box">
-      <input type="number" min="0" max="9" maxlength="1" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-    </div>
-    <div class="input-box">
-      <input type="number" min="0" max="9" maxlength="1" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-    </div>
-    <div class="input-box">
-      <input type="number" min="0" max="9" maxlength="1" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-    </div>
-    <div class="input-box">
-      <input type="number" min="0" max="9" maxlength="1" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-    </div>
+    <div class="input-box"><input type="number" min="0" max="9"></div>
+    <div class="input-box"><input type="number" min="0" max="9"></div>
+    <div class="input-box"><input type="number" min="0" max="9"></div>
+    <div class="input-box"><input type="number" min="0" max="9"></div>
+    <div class="input-box"><input type="number" min="0" max="9"></div>
+    <div class="input-box"><input type="number" min="0" max="9"></div>
   </div>
-
 </body>
+
+ 
+  <button id="submit-button">Submit</button>
+
+  <p id="confirmation" style="display: none; color: green;">Code submitted successfully!</p>
+
+  <script>
+    const boxes = document.querySelectorAll('.code-box');
+    const submitButton = document.getElementById('submit-button');
+    const confirmation = document.getElementById('confirmation');
+
+    submitButton.addEventListener('click', () => {
+      let allFilled = true;
+      let allNumeric = true;
+
+      boxes.forEach(box => {
+        if (box.value === '') {
+          allFilled = false;
+        } else if (!/^[0-9]$/.test(box.value)) {
+          allNumeric = false;
+        }
+      });
+
+      if (allFilled && allNumeric) {
+        confirmation.style.display = 'block';
+      } else {
+        confirmation.style.display = 'none';
+        if(!allFilled){
+            alert("Please fill all boxes");
+        }
+        else if(!allNumeric){
+            alert("Please use only numbers 0-9");
+        }
+      }
+    });
+
+      boxes.forEach(box => {
+        box.addEventListener('input', function() {
+          if (this.value.length > 1) {
+            this.value = this.value.slice(0, 1);
+          }
+        });
+      });
+  </script>
+
+
 </html>
