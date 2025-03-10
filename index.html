@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bluebook</title>
+    <title>PSAT Score Validation</title>
     <style>
         body {
             width: 100vw;
-            height:100vh;
+            height: 100vh;
             background-color: #c9dfd3;
             display: flex;
             justify-content: center;
@@ -66,19 +66,19 @@
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 16px;
-            display: none; /* Initially hide the submit button */
+            display: none;
         }
     </style>
 </head>
 <body>
     <h1>PSAT Score Validation</h1>
     <div class="container">
-        <div class="input-box"><input type="number" min="0" max="9" id="box1"></div>
-        <div class="input-box"><input type="number" min="0" max="9" id="box2"></div>
-        <div class="input-box"><input type="number" min="0" max="9" id="box3"></div>
-        <div class="input-box"><input type="number" min="0" max="9" id="box4"></div>
-        <div class="input-box"><input type="number" min="0" max="9" id="box5"></div>
-        <div class="input-box"><input type="number" min="0" max="9" id="box6"></div>
+        <div class="input-box"><input type="number" min="0" max="9" id="box1" maxlength="1"></div>
+        <div class="input-box"><input type="number" min="0" max="9" id="box2" maxlength="1"></div>
+        <div class="input-box"><input type="number" min="0" max="9" id="box3" maxlength="1"></div>
+        <div class="input-box"><input type="number" min="0" max="9" id="box4" maxlength="1"></div>
+        <div class="input-box"><input type="number" min="0" max="9" id="box5" maxlength="1"></div>
+        <div class="input-box"><input type="number" min="0" max="9" id="box6" maxlength="1"></div>
     </div>
 
     <button id="submit-button">Submit</button>
@@ -99,20 +99,21 @@
             }
         }
 
-        boxes.forEach(box => {
+        boxes.forEach((box, index) => {
             box.addEventListener('input', function() {
-                if (this.value.length > 1) {
-                    this.value = this.value.slice(0, 1);
+                if (this.value.length === 1) {
+                    if (index < boxes.length - 1) {
+                        boxes[index + 1].focus();
+                    }
                 }
                 checkCode();
             });
-            box.addEventListener('change', checkCode); //add change event, to account for paste
+            box.addEventListener('change', checkCode);
         });
 
         submitButton.addEventListener('click', () => {
             confirmation.style.display = 'block';
         });
-
     </script>
 </body>
 </html>
